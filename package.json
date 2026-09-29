@@ -1,0 +1,20 @@
+{
+  "name": "novtf",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test test/**/*.ts",
+    "start": "node --experimental-strip-types src/main.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.8",
+    "typescript": "~5.9.2"
+  },
+  "dependencies": {
+    "hash-wasm": "^4.12.0"
+  }
+}

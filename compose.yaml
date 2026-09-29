@@ -1,0 +1,43 @@
+services:
+  api:
+    build: .
+    command: ["node", "--experimental-strip-types", "src/main.ts", "api"]
+    environment:
+      NOVTF_ROLE: api
+      NOVTF_DATA_DIR: /var/lib/novtf
+      NOVTF_API_HOST: "0.0.0.0"
+      NOVTF_OPERATOR_PASSWORD: ${NOVTF_OPERATOR_PASSWORD}
+      NOVTF_MASTER_KEY: ${NOVTF_MASTER_KEY}
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - novtf:/var/lib/novtf
+  state:
+    build: .
+    command: ["node", "--experimental-strip-types", "src/main.ts", "state"]
+    environment:
+      NOVTF_ROLE: state
+      NOVTF_DATA_DIR: /var/lib/novtf
+      NOVTF_MASTER_KEY: ${NOVTF_MASTER_KEY}
+      NOVTF_STATE_PASSWORD: ${NOVTF_STATE_PASSWORD}
+    volumes:
+      - novtf:/var/lib/novtf
+  supervisor:
+    build: .
+    command: ["node", "--experimental-strip-types", "src/main.ts", "supervisor"]
+    environment:
+      NOVTF_ROLE: supervisor
+      NOVTF_DATA_DIR: /var/lib/novtf
+    volumes:
+      - novtf:/var/lib/novtf
+      - /var/run/docker.sock:/var/run/docker.sock
+  collector:
+    build: .
+    command: ["node", "--experimental-strip-types", "src/main.ts", "collector"]
+    environment:
+      NOVTF_ROLE: collector
+      NOVTF_DATA_DIR: /var/lib/novtf
+    volumes:
+      - novtf:/var/lib/novtf
+volumes:
+  novtf:
