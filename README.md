@@ -1,10 +1,43 @@
 # novtf
 
+[中文](#中文)
+
+A multi-cloud resource control plane. It is written in TypeScript and runs on Node.js 22. State is one SQLite file.
+
+Design and architecture notes stay on the local machine and are not part of this repository.
+
+## Processes
+
+One image. The argument selects the role:
+
+- `api` listens on `127.0.0.1:8080`. The pages only read the database.
+- `state` listens on 8081 for the Terraform HTTP backend. It is not published on the host.
+- `supervisor` backs the database up to `/var/lib/novtf/backups` once a day. Queued work stays `queued` until a runner image is connected.
+- `collector` marks expired runtime status as stale every 60 seconds. It does not call cloud APIs.
+
+```sh
+npm test
+npm run typecheck
+NOVTF_OPERATOR_PASSWORD=choose-one NOVTF_DATA_DIR=./data npm start
+```
+
+On the first start, if the database has no users, `NOVTF_OPERATOR_PASSWORD` creates `admin`. The page is `/login`. `state` also needs `NOVTF_MASTER_KEY` (64 hexadecimal characters) and `NOVTF_STATE_PASSWORD`.
+
+Compose:
+
+```sh
+NOVTF_OPERATOR_PASSWORD=… NOVTF_MASTER_KEY=… NOVTF_STATE_PASSWORD=… docker compose up --build
+```
+
+## 中文
+
+[English](#novtf)
+
 多云服务资源管理系统。开发语言是 TypeScript，运行在 Node.js 22。数据库是一个 SQLite 文件。
 
 设计与架构文档留在本机，不放进这个仓库。
 
-## 进程
+### 进程
 
 同一份镜像，用参数选择角色：
 
@@ -24,5 +57,5 @@ NOVTF_OPERATOR_PASSWORD=choose-one NOVTF_DATA_DIR=./data npm start
 Compose：
 
 ```sh
-NOVTF_MASTER_KEY=… NOVTF_STATE_PASSWORD=… docker compose up --build
+NOVTF_OPERATOR_PASSWORD=… NOVTF_MASTER_KEY=… NOVTF_STATE_PASSWORD=… docker compose up --build
 ```
