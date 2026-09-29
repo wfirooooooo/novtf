@@ -4,8 +4,6 @@
 
 A multi-cloud resource control plane. It is written in TypeScript and runs on Node.js 22. State is one SQLite file.
 
-Design and architecture notes stay on the local machine and are not part of this repository.
-
 ## Processes
 
 One image. The argument selects the role:
@@ -34,8 +32,6 @@ NOVTF_OPERATOR_PASSWORD=… NOVTF_MASTER_KEY=… NOVTF_STATE_PASSWORD=… docker
 [English](#novtf)
 
 多云服务资源管理系统。开发语言是 TypeScript，运行在 Node.js 22。数据库是一个 SQLite 文件。
-
-设计与架构文档留在本机，不放进这个仓库。
 
 ### 进程
 
