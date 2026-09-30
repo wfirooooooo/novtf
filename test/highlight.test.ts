@@ -58,5 +58,5 @@ test("colored terraform files keep the generated text", () => {
     assert.match(html, /class="tok-str"/);
     assert.equal(file.body.includes("password"), false);
   }
-  assert.match(highlightJson(files[1]?.body ?? ""), /class="tok-ref">\$\{var\.networks\.app\.cidr\}</);
+  assert.match(highlightJson(files[2]?.body ?? ""), /class="tok-ref">\$\{var\.networks\.app\.cidr\}</);
 });

@@ -198,7 +198,8 @@ test("admin can add a platform, its service, a region and zones", async () => {
   assert.equal(after.n, before.n);
   const audit = await fetch(new URL(auditLocation, base), { headers: { cookie } });
   const auditHtml = await audit.text();
-  assert.match(auditHtml, /terraform\.tf\.json/);
+  assert.match(auditHtml, /backend\.tf\.json/);
+  assert.match(auditHtml, /variables\.tf\.json/);
   assert.match(auditHtml, /hashicorp\/aws/);
   assert.match(auditHtml, /没有执行 terraform/);
   assert.match(auditHtml, /\$\{var\.services\.aws_compute_vm\.count\}/);
