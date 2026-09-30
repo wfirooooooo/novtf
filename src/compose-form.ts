@@ -133,10 +133,10 @@ function platformCard(
 <label class="region-pick"><span>区域</span>${regionSelect}</label>
 ${credentialSelect(platformId, draft, choices)}
 </header>
-${body}
-${zones}
 <div class="net-head"><strong>网络</strong><p>名称自己填写，小写字母开头。相同名称是同一套网络，最多三套。填了名称却没有资源使用，不能保存。</p></div>
 <div class="nets">${networks}</div>
+${body}
+${zones}
 </article>`;
 }
 
